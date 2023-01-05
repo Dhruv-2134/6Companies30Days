@@ -1,3 +1,11 @@
+// Apply Dijkstra shortest path algorithm as the problem involves shortest distance from source to destination. We need to modify Dijkstra's algorithm so that it can keep track of the path counts from node 0 to every other node in a way that it can keep track of the distance from every other node to node 0 with the shortest possible distance as the ultimate goal of the problem.
+
+// If you find a shortest distance then update the path with new value.
+// If you find a equal shortest distance then add the value of the parrent node path number to the current node.
+
+// Time Complexity: O(E * logV + N), where E is number of roads, V is number of nodes.
+// Space Complexity: O(E + V)
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
