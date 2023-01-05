@@ -33,12 +33,10 @@ public:
 			{
 				if (y % x.first != 0)
 				{
-
 					div = 1;
 					break;
 				}
 			}
-
 			if (div == 1)
 			{
 				ans += x.second;
@@ -48,7 +46,6 @@ public:
 				return ans;
 			}
 		}
-
 		return -1;
 	}
 };
