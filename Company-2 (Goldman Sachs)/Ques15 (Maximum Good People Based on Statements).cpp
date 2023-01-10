@@ -7,33 +7,21 @@ using namespace std;
 
 class Solution {
 public:
-    int maximumGood(vector<vector<int>>& statements) {
-        int ans=0;
-        for(int i=1; i<(1<<statements.size()); i++){
-            int chk=1;
-            for(int j=0; j<statements.size(); j++){
-                if(!(i&(1<<j))){
-                    continue;
-                }
-                for(int k=0; k<statements.size(); k++){
-                    if((i&(1<<k)) && statements[j][k]==0){
-                        chk=-1; break;
-                    }
-                    else if(!(i&(1<<k)) && statements[j][k]==1){
-                        chk=-1; break;
+    int maximumGood(vector<vector<int>>& A) {
+        int N = A.size(), ans = 0;
+        auto valid = [&](int m) {
+            for (int i = 0; i < N; ++i) {
+                if (m >> i & 1) { // person i is good
+                    for (int j = 0; j < N; ++j) { // test if there is any contradiction in the statements from person i
+                        int good = m >> j & 1; // whether person j is good
+                        if ((A[i][j] == 0 && good) || (A[i][j] == 1 && !good)) return false;
                     }
                 }
-                if(chk==-1){break;}
             }
-            if(chk==1){
-                int cnt=0;
-                int n1=i;
-                while(n1>0){
-                    if(1&n1){cnt++;}
-                    n1=n1>>1;
-                }
-                ans=max(ans, cnt);
-            }
+            return true;
+        };
+        for (int m = 1; m < (1 << N); ++m) {
+            if (valid(m)) ans = max(ans, __builtin_popcount(m));
         }
         return ans;
     }

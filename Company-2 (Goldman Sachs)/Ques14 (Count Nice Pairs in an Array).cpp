@@ -8,27 +8,25 @@ using namespace std;
 
 class Solution {
 public:
+    int rev(int n)   //function to find reverse of a number
+    {
+        int res=0;
+        while(n!=0)
+        {
+            res=res*10+n%10;
+            n/=10;
+        }
+        return res;
+    }
     int countNicePairs(vector<int>& nums) {
-        int M=1e9+7, cnt=0;
-        map<int, int>m;
-        vector<int>v;
-        for(int i=0; i<nums.size(); i++){
-            int x=nums[i], val=0;
-            while(x){
-                val+=x%10;
-                if(x/10){val*=10;}
-                x/=10;
-            }
-            v.push_back(val);
+        unordered_map<int,int> um;     //to store the count of given formula
+        int res=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            int tmp=nums[i]-rev(nums[i]);        //given formula
+            um[tmp]++;
+            res=(res+um[tmp]-1)%1000000007;      //to count (i,j) pair indirectly
         }
-        //for(int i=0; i<nums.size(); i++){cout<<v[i]<<" ";}cout<<endl;
-        for(int i=0; i<nums.size(); i++){
-            if(m.find(nums[i]-v[i])!=m.end()){
-                cnt+=(m[nums[i]-v[i]])%M;
-                cnt%=M;
-            }
-            m[nums[i]-v[i]]++;
-        }
-        return cnt%M;
+        return res%1000000007;
     }
 };
